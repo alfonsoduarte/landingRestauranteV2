@@ -1,0 +1,406 @@
+---
+import menuData from '../data/menu.json';
+const { restaurante } = menuData;
+---
+
+<section class="reservations-section section" id="reservaciones">
+  <div class="container">
+    <div class="reservations-grid">
+      <div class="reservations-info">
+        <h2 class="section-title reservations-title">Reserva tu Mesa</h2>
+        <p class="reservations-description">
+          Vive una experiencia gastronómica inolvidable. Reserva tu mesa y déjanos
+          consentirte con los mejores sabores de la cocina mexicana contemporánea.
+        </p>
+
+        <div class="reservations-features">
+          <div class="feature-item">
+            <span class="feature-icon">🍷</span>
+            <div>
+              <h4>Ambiente Acogedor</h4>
+              <p>Decoración inspirada en la tradición mexicana con un toque moderno</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">👨‍🍳</span>
+            <div>
+              <h4>Chef Especializado</h4>
+              <p>Platillos preparados con técnicas contemporáneas y recetas tradicionales</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🎉</span>
+            <div>
+              <h4>Eventos Especiales</h4>
+              <p>Celebra cumpleaños, aniversarios y reuniones corporativas con nosotros</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reservations-contact">
+          <p>¿Prefieres llamar? Contáctanos directamente:</p>
+          <a href={`tel:${restaurante.telefono.replace(/\s/g, '')}`} class="phone-link">
+            📞 {restaurante.telefono}
+          </a>
+        </div>
+      </div>
+
+      <div class="reservations-form-container">
+        <form class="reservations-form" id="reservationForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nombre completo *</label>
+              <input type="text" id="name" name="name" required placeholder="Tu nombre" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Correo electrónico *</label>
+              <input type="email" id="email" name="email" required placeholder="tu@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="phone">Teléfono *</label>
+              <input type="tel" id="phone" name="phone" required placeholder="+52 55 1234 5678" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="date">Fecha *</label>
+              <input type="date" id="date" name="date" required />
+            </div>
+            <div class="form-group">
+              <label for="time">Hora *</label>
+              <select id="time" name="time" required>
+                <option value="">Selecciona hora</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="21:00">21:00</option>
+                <option value="21:30">21:30</option>
+                <option value="22:00">22:00</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="guests">Número de personas *</label>
+              <select id="guests" name="guests" required>
+                <option value="">Selecciona</option>
+                <option value="1">1 persona</option>
+                <option value="2">2 personas</option>
+                <option value="3">3 personas</option>
+                <option value="4">4 personas</option>
+                <option value="5">5 personas</option>
+                <option value="6">6 personas</option>
+                <option value="7">7 personas</option>
+                <option value="8">8 personas</option>
+                <option value="9-12">9-12 personas</option>
+                <option value="13+">Más de 12 (evento)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="occasion">Ocasión</label>
+              <select id="occasion" name="occasion">
+                <option value="">Selecciona (opcional)</option>
+                <option value="casual">Comida casual</option>
+                <option value="cumpleanos">Cumpleaños</option>
+                <option value="aniversario">Aniversario</option>
+                <option value="negocios">Reunión de negocios</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Notas especiales</label>
+            <textarea
+              id="notes"
+              name="notes"
+              rows="3"
+              placeholder="Alergias, preferencias dietéticas, peticiones especiales..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary submit-btn">
+            Confirmar Reservación
+          </button>
+
+          <p class="form-note">
+            * Te enviaremos un correo de confirmación. Para grupos mayores a 8 personas,
+            te contactaremos para confirmar disponibilidad.
+          </p>
+        </form>
+
+        <!-- Mensaje de éxito -->
+        <div class="form-success" id="formSuccess">
+          <span class="success-icon">✓</span>
+          <h3>¡Reservación Enviada!</h3>
+          <p>Hemos recibido tu solicitud. Te enviaremos un correo de confirmación pronto.</p>
+          <button class="btn btn-secondary" id="newReservation">Nueva Reservación</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reservations-section {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+  }
+
+  .reservations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+  }
+
+  .reservations-title {
+    color: var(--color-white);
+    text-align: left;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .reservations-description {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.7;
+  }
+
+  .reservations-features {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .feature-item {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .feature-item h4 {
+    color: var(--color-white);
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+  }
+
+  .feature-item p {
+    font-size: 0.9rem;
+    opacity: 0.85;
+  }
+
+  .reservations-contact {
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .reservations-contact p {
+    opacity: 0.85;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .phone-link {
+    font-size: 1.3rem;
+    font-weight: 600;
+    transition: opacity var(--transition-fast);
+  }
+
+  .phone-link:hover {
+    opacity: 0.8;
+  }
+
+  /* Formulario */
+  .reservations-form-container {
+    position: relative;
+  }
+
+  .reservations-form {
+    background-color: var(--color-white);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-dark);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--color-light);
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    color: var(--color-dark);
+    transition: border-color var(--transition-fast);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: 1.1rem;
+    margin-top: var(--spacing-sm);
+  }
+
+  .form-note {
+    font-size: 0.8rem;
+    color: var(--color-gray);
+    margin-top: var(--spacing-md);
+    text-align: center;
+  }
+
+  /* Mensaje de éxito */
+  .form-success {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-xl);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+  }
+
+  .form-success.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .success-icon {
+    width: 80px;
+    height: 80px;
+    background-color: #dcfce7;
+    color: #166534;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .form-success h3 {
+    color: var(--color-black);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .form-success p {
+    color: var(--color-gray);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  @media (max-width: 900px) {
+    .reservations-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-xl);
+    }
+
+    .reservations-title {
+      text-align: center;
+    }
+
+    .reservations-description {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .reservations-form {
+      padding: var(--spacing-md);
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('reservationForm') as HTMLFormElement;
+  const formSuccess = document.getElementById('formSuccess');
+  const newReservationBtn = document.getElementById('newReservation');
+  const dateInput = document.getElementById('date') as HTMLInputElement;
+
+  // Establecer fecha mínima (hoy)
+  const today = new Date().toISOString().split('T')[0];
+  if (dateInput) {
+    dateInput.min = today;
+  }
+
+  // Manejar envío del formulario
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    // Aquí puedes enviar los datos a tu backend o webhook de n8n
+    console.log('Datos de reservación:', data);
+
+    // Simular envío exitoso
+    form.style.opacity = '0';
+    setTimeout(() => {
+      form.style.visibility = 'hidden';
+      formSuccess?.classList.add('active');
+    }, 300);
+  });
+
+  // Nueva reservación
+  newReservationBtn?.addEventListener('click', () => {
+    formSuccess?.classList.remove('active');
+    form.reset();
+    form.style.visibility = 'visible';
+    form.style.opacity = '1';
+  });
+</script>

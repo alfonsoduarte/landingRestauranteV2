@@ -1,0 +1,199 @@
+---
+import menuData from '../data/menu.json';
+const { restaurante } = menuData;
+---
+
+<section class="hero" id="inicio">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-badge">Cocina Mexicana Contemporánea</span>
+    <h1 class="hero-title">{restaurante.nombre}</h1>
+    <p class="hero-subtitle">{restaurante.descripcion}</p>
+    <div class="hero-buttons">
+      <a href="#menu" class="btn btn-primary">Ver Menú</a>
+      <a href="#reservaciones" class="btn btn-secondary">Reservar Mesa</a>
+    </div>
+    <div class="hero-info">
+      <div class="hero-info-item">
+        <span class="hero-info-icon">📍</span>
+        <span>{restaurante.direccion}</span>
+      </div>
+      <div class="hero-info-item">
+        <span class="hero-info-icon">📞</span>
+        <span>{restaurante.telefono}</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <a href="#menu" class="scroll-indicator">
+      <span>Descubre</span>
+      <div class="scroll-arrow"></div>
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.4) 50%,
+      rgba(0, 0, 0, 0.6) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: var(--spacing-lg);
+    max-width: 800px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--color-white);
+    margin-bottom: var(--spacing-sm);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--spacing-xl);
+    font-weight: 300;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .hero-buttons .btn-secondary {
+    background-color: transparent;
+    border-color: var(--color-white);
+    color: var(--color-white);
+  }
+
+  .hero-buttons .btn-secondary:hover {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+  }
+
+  .hero-info {
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-info-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.95rem;
+  }
+
+  .hero-info-icon {
+    font-size: 1.1rem;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  .scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    transition: color var(--transition-fast);
+  }
+
+  .scroll-indicator:hover {
+    color: var(--color-white);
+  }
+
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0) rotate(45deg);
+    }
+    40% {
+      transform: translateY(8px) rotate(45deg);
+    }
+    60% {
+      transform: translateY(4px) rotate(45deg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-buttons .btn {
+      width: 100%;
+      max-width: 250px;
+    }
+
+    .hero-info {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+  }
+</style>

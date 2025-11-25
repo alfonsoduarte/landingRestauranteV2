@@ -1,0 +1,297 @@
+{
+  "restaurante": {
+    "nombre": "La Casa del Sabor",
+    "slogan": "Cocina Mexicana Contemporánea",
+    "descripcion": "Donde la tradición se encuentra con la innovación culinaria",
+    "telefono": "+52 55 1234 5678",
+    "email": "reservaciones@casadelsabor.mx",
+    "direccion": "Av. Reforma 250, Col. Juárez, CDMX",
+    "horarios": {
+      "lunes_jueves": "13:00 - 23:00",
+      "viernes_sabado": "13:00 - 00:00",
+      "domingo": "13:00 - 21:00"
+    },
+    "coordenadas": {
+      "lat": 19.4326,
+      "lng": -99.1332
+    }
+  },
+  "categorias": [
+    {
+      "id": "entradas",
+      "nombre": "Entradas",
+      "descripcion": "Para comenzar tu experiencia",
+      "platillos": [
+        {
+          "id": 1,
+          "nombre": "Guacamole Tradicional",
+          "descripcion": "Aguacate fresco machacado con cilantro, cebolla, chile serrano y limón. Servido con totopos caseros.",
+          "precio": 145,
+          "imagen": "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": true,
+          "picante": 1,
+          "recomendado": true
+        },
+        {
+          "id": 2,
+          "nombre": "Queso Fundido con Chorizo",
+          "descripcion": "Queso Oaxaca derretido con chorizo artesanal, servido con tortillas de maíz recién hechas.",
+          "precio": 175,
+          "imagen": "https://images.unsplash.com/photo-1628294895950-9805252327bc?w=400&q=80",
+          "alergenos": ["lácteos"],
+          "vegetariano": false,
+          "picante": 2
+        },
+        {
+          "id": 3,
+          "nombre": "Ceviche de Camarón",
+          "descripcion": "Camarón fresco marinado en limón con pepino, aguacate, cebolla morada y salsa de habanero.",
+          "precio": 195,
+          "imagen": "https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?w=400&q=80",
+          "alergenos": ["mariscos"],
+          "vegetariano": false,
+          "picante": 2,
+          "recomendado": true
+        },
+        {
+          "id": 4,
+          "nombre": "Esquites Callejeros",
+          "descripcion": "Granos de elote en vaso con mayonesa, queso cotija, chile piquín y limón.",
+          "precio": 85,
+          "imagen": "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=400&q=80",
+          "alergenos": ["lácteos"],
+          "vegetariano": true,
+          "picante": 1
+        },
+        {
+          "id": 5,
+          "nombre": "Sopes de Tinga",
+          "descripcion": "Tres sopes de maíz azul con tinga de pollo, crema, queso fresco y salsa verde.",
+          "precio": 155,
+          "imagen": "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=400&q=80",
+          "alergenos": ["lácteos"],
+          "vegetariano": false,
+          "picante": 2
+        }
+      ]
+    },
+    {
+      "id": "platos-fuertes",
+      "nombre": "Platos Fuertes",
+      "descripcion": "El corazón de nuestra cocina",
+      "platillos": [
+        {
+          "id": 6,
+          "nombre": "Tacos de Carnitas",
+          "descripcion": "Tres tacos de carnitas de cerdo confitadas, con cebolla caramelizada, cilantro y salsa de morita.",
+          "precio": 185,
+          "imagen": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=80",
+          "alergenos": ["gluten"],
+          "vegetariano": false,
+          "picante": 2,
+          "recomendado": true
+        },
+        {
+          "id": 7,
+          "nombre": "Enchiladas Suizas",
+          "descripcion": "Tres enchiladas rellenas de pollo bañadas en salsa verde cremosa, gratinadas con queso manchego.",
+          "precio": 195,
+          "imagen": "https://images.unsplash.com/photo-1534352956036-cd81e27dd615?w=400&q=80",
+          "alergenos": ["lácteos", "gluten"],
+          "vegetariano": false,
+          "picante": 1
+        },
+        {
+          "id": 8,
+          "nombre": "Mole Negro Oaxaqueño",
+          "descripcion": "Pechuga de pollo bañada en auténtico mole negro de 28 ingredientes, con arroz rojo y tortillas.",
+          "precio": 285,
+          "imagen": "https://images.unsplash.com/photo-1579631542720-3a87824fff86?w=400&q=80",
+          "alergenos": ["frutos secos", "ajonjolí"],
+          "vegetariano": false,
+          "picante": 2,
+          "recomendado": true
+        },
+        {
+          "id": 9,
+          "nombre": "Arrachera a la Parrilla",
+          "descripcion": "300g de arrachera marinada, con nopales asados, cebollas cambray, guacamole y frijoles charros.",
+          "precio": 345,
+          "imagen": "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": false,
+          "picante": 1
+        },
+        {
+          "id": 10,
+          "nombre": "Chiles en Nogada",
+          "descripcion": "Chile poblano relleno de picadillo de res y frutas, bañado en nogada y granada. (Temporada)",
+          "precio": 320,
+          "imagen": "https://images.unsplash.com/photo-1601924287811-e5c3c3f40125?w=400&q=80",
+          "alergenos": ["frutos secos", "lácteos"],
+          "vegetariano": false,
+          "picante": 1,
+          "recomendado": true
+        },
+        {
+          "id": 11,
+          "nombre": "Pozole Rojo",
+          "descripcion": "Caldo tradicional con maíz cacahuazintle, carne de cerdo, lechuga, rábano, orégano y tostadas.",
+          "precio": 195,
+          "imagen": "https://images.unsplash.com/photo-1608039829572-a0c2bfc5d1b4?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": false,
+          "picante": 2
+        },
+        {
+          "id": 12,
+          "nombre": "Tacos de Cochinita Pibil",
+          "descripcion": "Tres tacos de cochinita pibil estilo Yucatán con cebolla morada encurtida y habanero.",
+          "precio": 175,
+          "imagen": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": false,
+          "picante": 3
+        },
+        {
+          "id": 13,
+          "nombre": "Nopales Rellenos (Vegetariano)",
+          "descripcion": "Nopales asados rellenos de queso panela y champiñones, con salsa de chipotle y arroz verde.",
+          "precio": 185,
+          "imagen": "https://images.unsplash.com/photo-1615870216519-2f9fa575fa5c?w=400&q=80",
+          "alergenos": ["lácteos"],
+          "vegetariano": true,
+          "picante": 2
+        }
+      ]
+    },
+    {
+      "id": "postres",
+      "nombre": "Postres",
+      "descripcion": "El dulce final perfecto",
+      "platillos": [
+        {
+          "id": 14,
+          "nombre": "Flan Napolitano",
+          "descripcion": "Flan cremoso de vainilla con caramelo oscuro, receta de la abuela.",
+          "precio": 95,
+          "imagen": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=400&q=80",
+          "alergenos": ["lácteos", "huevo"],
+          "vegetariano": true,
+          "recomendado": true
+        },
+        {
+          "id": 15,
+          "nombre": "Churros con Chocolate",
+          "descripcion": "Seis churros recién hechos espolvoreados con azúcar y canela, con chocolate caliente para dippear.",
+          "precio": 115,
+          "imagen": "https://images.unsplash.com/photo-1624371414361-e670edf4892e?w=400&q=80",
+          "alergenos": ["gluten", "lácteos"],
+          "vegetariano": true
+        },
+        {
+          "id": 16,
+          "nombre": "Pastel de Tres Leches",
+          "descripcion": "Bizcocho bañado en tres leches, cubierto de crema batida y canela.",
+          "precio": 105,
+          "imagen": "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=400&q=80",
+          "alergenos": ["lácteos", "gluten", "huevo"],
+          "vegetariano": true,
+          "recomendado": true
+        },
+        {
+          "id": 17,
+          "nombre": "Helado de Mamey",
+          "descripcion": "Dos bolas de helado artesanal de mamey con galleta de amaranto.",
+          "precio": 85,
+          "imagen": "https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=400&q=80",
+          "alergenos": ["lácteos"],
+          "vegetariano": true
+        },
+        {
+          "id": 18,
+          "nombre": "Pay de Limón",
+          "descripcion": "Pay de limón con base de galleta maría y merengue italiano flameado.",
+          "precio": 95,
+          "imagen": "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=400&q=80",
+          "alergenos": ["gluten", "lácteos", "huevo"],
+          "vegetariano": true
+        }
+      ]
+    },
+    {
+      "id": "bebidas",
+      "nombre": "Bebidas",
+      "descripcion": "Refrescantes y tradicionales",
+      "platillos": [
+        {
+          "id": 19,
+          "nombre": "Agua de Horchata",
+          "descripcion": "Bebida tradicional de arroz con canela y vainilla.",
+          "precio": 55,
+          "imagen": "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": true,
+          "recomendado": true
+        },
+        {
+          "id": 20,
+          "nombre": "Agua de Jamaica",
+          "descripcion": "Infusión de flor de jamaica con un toque de limón.",
+          "precio": 55,
+          "imagen": "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": true
+        },
+        {
+          "id": 21,
+          "nombre": "Michelada Clásica",
+          "descripcion": "Cerveza con limón, salsa inglesa, salsa picante y sal de gusano en el borde.",
+          "precio": 95,
+          "imagen": "https://images.unsplash.com/photo-1587888637140-849b1a881e68?w=400&q=80",
+          "alergenos": ["gluten"],
+          "vegetariano": true,
+          "picante": 2
+        },
+        {
+          "id": 22,
+          "nombre": "Margarita de la Casa",
+          "descripcion": "Tequila reposado, triple sec, limón fresco y sal de chapulín.",
+          "precio": 145,
+          "imagen": "https://images.unsplash.com/photo-1556855810-ac404aa91e85?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": true,
+          "recomendado": true
+        },
+        {
+          "id": 23,
+          "nombre": "Mezcal Artesanal",
+          "descripcion": "Copa de mezcal espadín de Oaxaca con naranja y sal de gusano.",
+          "precio": 165,
+          "imagen": "https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": true
+        },
+        {
+          "id": 24,
+          "nombre": "Café de Olla",
+          "descripcion": "Café de Chiapas preparado con piloncillo, canela y anís.",
+          "precio": 65,
+          "imagen": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": true
+        },
+        {
+          "id": 25,
+          "nombre": "Limonada con Chía",
+          "descripcion": "Limonada natural con semillas de chía y hierbabuena.",
+          "precio": 60,
+          "imagen": "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400&q=80",
+          "alergenos": ["ninguno"],
+          "vegetariano": true
+        }
+      ]
+    }
+  ]
+}

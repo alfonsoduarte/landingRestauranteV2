@@ -1,0 +1,315 @@
+---
+// Imágenes de ejemplo de Unsplash para la galería
+const images = [
+  {
+    url: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80',
+    alt: 'Tacos tradicionales mexicanos',
+    category: 'platillos'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=600&q=80',
+    alt: 'Interior del restaurante',
+    category: 'ambiente'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1625167171404-ce3e5dd5ba6d?w=600&q=80',
+    alt: 'Guacamole fresco',
+    category: 'platillos'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=600&q=80',
+    alt: 'Enchiladas con salsa',
+    category: 'platillos'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80',
+    alt: 'Mesa elegante',
+    category: 'ambiente'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1560717789-0ac7c58ac90a?w=600&q=80',
+    alt: 'Margarita clásica',
+    category: 'bebidas'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1564436872-1c5f11aabf8e?w=600&q=80',
+    alt: 'Mole oaxaqueño',
+    category: 'platillos'
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=600&q=80',
+    alt: 'Área de bar',
+    category: 'ambiente'
+  }
+];
+---
+
+<section class="gallery-section section" id="galeria">
+  <div class="container">
+    <h2 class="section-title">Nuestra Galería</h2>
+    <p class="section-subtitle">Momentos y sabores que nos definen</p>
+
+    <div class="gallery-filters">
+      <button class="gallery-filter active" data-filter="all">Todos</button>
+      <button class="gallery-filter" data-filter="platillos">Platillos</button>
+      <button class="gallery-filter" data-filter="ambiente">Ambiente</button>
+      <button class="gallery-filter" data-filter="bebidas">Bebidas</button>
+    </div>
+
+    <div class="gallery-grid">
+      {images.map((image, index) => (
+        <div class="gallery-item" data-category={image.category}>
+          <img
+            src={image.url}
+            alt={image.alt}
+            loading="lazy"
+          />
+          <div class="gallery-item-overlay">
+            <span class="gallery-item-caption">{image.alt}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Modal para imagen ampliada -->
+<div class="gallery-modal" id="galleryModal">
+  <button class="gallery-modal-close" id="modalClose">✕</button>
+  <img src="" alt="" class="gallery-modal-image" id="modalImage" />
+  <p class="gallery-modal-caption" id="modalCaption"></p>
+</div>
+
+<style>
+  .gallery-section {
+    background-color: var(--color-cream);
+  }
+
+  .gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+  }
+
+  .gallery-filter {
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all var(--transition-normal);
+    border: 2px solid transparent;
+  }
+
+  .gallery-filter:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .gallery-filter.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+  }
+
+  .gallery-item {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+  }
+
+  .gallery-item:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .gallery-item:nth-child(5) {
+    grid-column: span 2;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+
+  .gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--spacing-md);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+
+  .gallery-item:hover .gallery-item-overlay {
+    opacity: 1;
+  }
+
+  .gallery-item-caption {
+    color: var(--color-white);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .gallery-item.hidden {
+    display: none;
+  }
+
+  /* Modal */
+  .gallery-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    padding: var(--spacing-lg);
+  }
+
+  .gallery-modal.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .gallery-modal-close {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    background: none;
+    color: var(--color-white);
+    font-size: 2rem;
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+  }
+
+  .gallery-modal-close:hover {
+    opacity: 1;
+  }
+
+  .gallery-modal-image {
+    max-width: 90%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+  }
+
+  .gallery-modal-caption {
+    color: var(--color-white);
+    margin-top: var(--spacing-md);
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 900px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gallery-item:nth-child(1) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    .gallery-item:nth-child(5) {
+      grid-column: span 1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(5) {
+      grid-column: span 1;
+    }
+  }
+</style>
+
+<script>
+  // Filtrado de galería
+  const filterButtons = document.querySelectorAll('.gallery-filter');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const filter = button.getAttribute('data-filter');
+
+      // Actualizar botón activo
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      // Filtrar items
+      galleryItems.forEach(item => {
+        const category = item.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
+
+  // Modal de imagen
+  const modal = document.getElementById('galleryModal');
+  const modalImage = document.getElementById('modalImage') as HTMLImageElement;
+  const modalCaption = document.getElementById('modalCaption');
+  const modalClose = document.getElementById('modalClose');
+
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img') as HTMLImageElement;
+      const caption = item.querySelector('.gallery-item-caption')?.textContent || '';
+
+      if (modalImage && modalCaption) {
+        modalImage.src = img.src.replace('w=600', 'w=1200');
+        modalImage.alt = img.alt;
+        modalCaption.textContent = caption;
+      }
+
+      modal?.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeModal() {
+    modal?.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  modalClose?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+      closeModal();
+    }
+  });
+</script>

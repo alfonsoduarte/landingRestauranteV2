@@ -1,0 +1,225 @@
+---
+const faqs = [
+  {
+    pregunta: "¿Necesito reservar con anticipación?",
+    respuesta: "Recomendamos hacer reservación, especialmente los fines de semana y días festivos. Para grupos mayores a 6 personas, es indispensable reservar con al menos 24 horas de anticipación. Puedes reservar directamente en nuestra página o llamarnos."
+  },
+  {
+    pregunta: "¿Tienen opciones vegetarianas o veganas?",
+    respuesta: "¡Sí! Contamos con varias opciones vegetarianas marcadas en nuestro menú, como los Nopales Rellenos, Esquites Callejeros y el Guacamole Tradicional. También podemos adaptar algunos platillos a opciones veganas, solo indícalo al hacer tu pedido."
+  },
+  {
+    pregunta: "¿Cuáles son sus formas de pago?",
+    respuesta: "Aceptamos efectivo, todas las tarjetas de crédito y débito (Visa, Mastercard, American Express), así como pagos por transferencia bancaria y aplicaciones móviles como Apple Pay y Google Pay."
+  },
+  {
+    pregunta: "¿Tienen estacionamiento?",
+    respuesta: "Contamos con estacionamiento con valet parking de cortesía para nuestros clientes. También hay estacionamientos públicos cercanos si prefieres estacionar por tu cuenta."
+  },
+  {
+    pregunta: "¿Puedo celebrar eventos privados en el restaurante?",
+    respuesta: "¡Por supuesto! Ofrecemos servicios para eventos privados como cumpleaños, aniversarios, reuniones corporativas y más. Contamos con un área privada para hasta 30 personas. Contáctanos para cotizaciones personalizadas."
+  },
+  {
+    pregunta: "¿Los platillos son muy picantes?",
+    respuesta: "El nivel de picante varía según el platillo. En nuestro menú indicamos el nivel de picante con el símbolo 🌶️ (1-3 chiles). Además, servimos las salsas por separado para que ajustes el picante a tu gusto. No dudes en preguntar a tu mesero."
+  },
+  {
+    pregunta: "¿Tienen menú infantil?",
+    respuesta: "Sí, contamos con un menú especial para niños que incluye opciones como quesadillas, tacos suaves de pollo y mini enchiladas, todos con porciones adecuadas y sin picante. Pregunta a tu mesero por las opciones disponibles."
+  },
+  {
+    pregunta: "¿Hacen entregas a domicilio?",
+    respuesta: "Actualmente trabajamos con plataformas de delivery como Uber Eats, Rappi y DiDi Food. También puedes ordenar directamente llamándonos para recoger tu pedido en el restaurante (para llevar)."
+  }
+];
+---
+
+<section class="faq-section section" id="faq">
+  <div class="container">
+    <h2 class="section-title">Preguntas Frecuentes</h2>
+    <p class="section-subtitle">Resolvemos tus dudas más comunes</p>
+
+    <div class="faq-container">
+      {faqs.map((faq, index) => (
+        <div class="faq-item" data-index={index}>
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">{faq.pregunta}</span>
+            <span class="faq-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <p>{faq.respuesta}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="faq-cta">
+      <p>¿No encontraste lo que buscabas?</p>
+      <button class="btn btn-primary" id="openChatFromFaq">
+        Pregúntale a nuestro asistente 💬
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    background-color: var(--color-cream);
+  }
+
+  .faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .faq-item {
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-normal);
+  }
+
+  .faq-item:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .faq-item.active {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: none;
+    text-align: left;
+    gap: var(--spacing-md);
+    transition: background-color var(--transition-fast);
+  }
+
+  .faq-question:hover {
+    background-color: var(--color-light);
+  }
+
+  .faq-question-text {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-black);
+    line-height: 1.4;
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-light);
+    border-radius: 50%;
+    color: var(--color-primary);
+    transition: all var(--transition-normal);
+  }
+
+  .faq-item.active .faq-icon {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 300px;
+  }
+
+  .faq-answer p {
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+    color: var(--color-gray);
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  .faq-cta {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .faq-cta p {
+    color: var(--color-gray);
+    margin-bottom: var(--spacing-md);
+  }
+
+  @media (max-width: 768px) {
+    .faq-question {
+      padding: var(--spacing-md);
+    }
+
+    .faq-question-text {
+      font-size: 0.95rem;
+    }
+
+    .faq-answer p {
+      padding: 0 var(--spacing-md) var(--spacing-md);
+    }
+  }
+</style>
+
+<script>
+  // Accordion functionality
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+
+    question?.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+
+      // Cerrar todos los demás
+      faqItems.forEach(otherItem => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('active');
+          otherItem.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Toggle el actual
+      item.classList.toggle('active', !isActive);
+      question.setAttribute('aria-expanded', (!isActive).toString());
+    });
+  });
+
+  // Abrir chat desde FAQ
+  const openChatBtn = document.getElementById('openChatFromFaq');
+  const chatToggle = document.getElementById('chatToggle');
+
+  openChatBtn?.addEventListener('click', () => {
+    chatToggle?.click();
+    // Scroll al chat si está en la parte inferior
+    setTimeout(() => {
+      const chatInput = document.getElementById('chatInput');
+      chatInput?.focus();
+    }, 400);
+  });
+</script>

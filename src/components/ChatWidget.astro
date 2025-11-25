@@ -1,0 +1,512 @@
+---
+// El webhook de n8n se configura aquí
+const N8N_WEBHOOK_URL = 'TU_WEBHOOK_N8N_AQUI'; // Cambia esto por tu URL de webhook de n8n
+---
+
+<div class="chat-widget" id="chatWidget">
+  <!-- Botón flotante para abrir el chat -->
+  <button class="chat-toggle" id="chatToggle" aria-label="Abrir chat">
+    <span class="chat-toggle-icon" id="chatToggleIcon">💬</span>
+    <span class="chat-toggle-pulse"></span>
+  </button>
+
+  <!-- Ventana del chat -->
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">🌮</div>
+        <div>
+          <h4 class="chat-title">La Casa del Sabor</h4>
+          <span class="chat-status">En línea - Respondo al instante</span>
+        </div>
+      </div>
+      <button class="chat-close" id="chatClose" aria-label="Cerrar chat">✕</button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-message bot">
+        <div class="chat-message-content">
+          ¡Hola! 👋 Soy el asistente virtual de La Casa del Sabor. Puedo ayudarte con:
+          <ul style="margin: 8px 0 0 16px; padding: 0;">
+            <li>Información sobre nuestros platillos</li>
+            <li>Precios y recomendaciones</li>
+            <li>Alérgenos e ingredientes</li>
+            <li>Horarios y ubicación</li>
+          </ul>
+          ¿En qué puedo ayudarte hoy?
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-suggestions" id="chatSuggestions">
+      <button class="chat-suggestion" data-message="¿Qué platillos me recomiendas?">Recomendaciones</button>
+      <button class="chat-suggestion" data-message="¿Tienen opciones vegetarianas?">Vegetarianos</button>
+      <button class="chat-suggestion" data-message="¿Cuáles son los precios?">Precios</button>
+      <button class="chat-suggestion" data-message="¿Cuál es el horario?">Horario</button>
+    </div>
+
+    <form class="chat-input-container" id="chatForm">
+      <input
+        type="text"
+        class="chat-input"
+        id="chatInput"
+        placeholder="Escribe tu pregunta..."
+        autocomplete="off"
+      />
+      <button type="submit" class="chat-send" id="chatSend" aria-label="Enviar mensaje">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<style>
+  .chat-widget {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    z-index: 1001;
+  }
+
+  /* Botón flotante */
+  .chat-toggle {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+    color: var(--color-white);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-xl);
+    transition: all var(--transition-normal);
+  }
+
+  .chat-toggle:hover {
+    transform: scale(1.1);
+  }
+
+  .chat-toggle-pulse {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    opacity: 0.4;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.4;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+
+  .chat-toggle.active .chat-toggle-pulse {
+    display: none;
+  }
+
+  /* Ventana del chat */
+  .chat-window {
+    position: absolute;
+    bottom: 80px;
+    right: 0;
+    width: 380px;
+    height: 520px;
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.95);
+    transition: all var(--transition-normal);
+  }
+
+  .chat-window.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Header del chat */
+  .chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    color: var(--color-white);
+  }
+
+  .chat-header-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .chat-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+  }
+
+  .chat-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .chat-status {
+    font-size: 0.75rem;
+    opacity: 0.9;
+  }
+
+  .chat-close {
+    background: none;
+    color: var(--color-white);
+    font-size: 1.2rem;
+    padding: var(--spacing-xs);
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+  }
+
+  .chat-close:hover {
+    opacity: 1;
+  }
+
+  /* Mensajes */
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .chat-message {
+    max-width: 85%;
+    animation: messageIn 0.3s ease;
+  }
+
+  @keyframes messageIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .chat-message.bot {
+    align-self: flex-start;
+  }
+
+  .chat-message.user {
+    align-self: flex-end;
+  }
+
+  .chat-message-content {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-lg);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .chat-message.bot .chat-message-content {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    border-bottom-left-radius: 4px;
+  }
+
+  .chat-message.user .chat-message-content {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    border-bottom-right-radius: 4px;
+  }
+
+  /* Indicador de escritura */
+  .typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-light);
+    border-radius: var(--radius-lg);
+    border-bottom-left-radius: 4px;
+    width: fit-content;
+  }
+
+  .typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-gray);
+    border-radius: 50%;
+    animation: typing 1.4s infinite ease-in-out;
+  }
+
+  .typing-indicator span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .typing-indicator span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes typing {
+    0%, 60%, 100% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-6px);
+    }
+  }
+
+  /* Sugerencias */
+  .chat-suggestions {
+    padding: var(--spacing-xs) var(--spacing-md);
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+    border-top: 1px solid var(--color-light);
+  }
+
+  .chat-suggestion {
+    background-color: var(--color-light);
+    color: var(--color-primary);
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+  }
+
+  .chat-suggestion:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+  }
+
+  /* Input */
+  .chat-input-container {
+    display: flex;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--color-light);
+  }
+
+  .chat-input {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-light);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    transition: border-color var(--transition-fast);
+  }
+
+  .chat-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .chat-send {
+    width: 44px;
+    height: 44px;
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+  }
+
+  .chat-send:hover {
+    background-color: var(--color-accent-light);
+    transform: scale(1.05);
+  }
+
+  .chat-send:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .chat-widget {
+      bottom: var(--spacing-sm);
+      right: var(--spacing-sm);
+    }
+
+    .chat-window {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+    }
+
+    .chat-header {
+      border-radius: 0;
+    }
+  }
+</style>
+
+<script define:vars={{ N8N_WEBHOOK_URL }}>
+  // Elementos del DOM
+  const chatToggle = document.getElementById('chatToggle');
+  const chatToggleIcon = document.getElementById('chatToggleIcon');
+  const chatWindow = document.getElementById('chatWindow');
+  const chatClose = document.getElementById('chatClose');
+  const chatForm = document.getElementById('chatForm');
+  const chatInput = document.getElementById('chatInput');
+  const chatMessages = document.getElementById('chatMessages');
+  const chatSuggestions = document.getElementById('chatSuggestions');
+  const suggestionButtons = document.querySelectorAll('.chat-suggestion');
+
+  // Estado del chat
+  let isOpen = false;
+  let conversationHistory = [];
+
+  // Toggle del chat
+  function toggleChat() {
+    isOpen = !isOpen;
+    chatWindow.classList.toggle('active', isOpen);
+    chatToggle.classList.toggle('active', isOpen);
+    chatToggleIcon.textContent = isOpen ? '✕' : '💬';
+
+    if (isOpen) {
+      chatInput.focus();
+    }
+  }
+
+  chatToggle.addEventListener('click', toggleChat);
+  chatClose.addEventListener('click', toggleChat);
+
+  // Agregar mensaje al chat
+  function addMessage(content, isBot = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${isBot ? 'bot' : 'user'}`;
+    messageDiv.innerHTML = `<div class="chat-message-content">${content}</div>`;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    // Guardar en historial
+    conversationHistory.push({
+      role: isBot ? 'assistant' : 'user',
+      content: content
+    });
+  }
+
+  // Mostrar indicador de escritura
+  function showTyping() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-message bot';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = `
+      <div class="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    `;
+    chatMessages.appendChild(typingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // Ocultar indicador de escritura
+  function hideTyping() {
+    const typing = document.getElementById('typingIndicator');
+    if (typing) typing.remove();
+  }
+
+  // Enviar mensaje al webhook de n8n
+  async function sendMessage(message) {
+    addMessage(message, false);
+    chatInput.value = '';
+    chatSuggestions.style.display = 'none';
+
+    showTyping();
+
+    try {
+      // Verificar si el webhook está configurado
+      if (N8N_WEBHOOK_URL === 'TU_WEBHOOK_N8N_AQUI') {
+        hideTyping();
+        addMessage('⚠️ El chat aún no está configurado. Para activarlo, edita el archivo <code>ChatWidget.astro</code> y agrega tu URL de webhook de n8n en la variable <code>N8N_WEBHOOK_URL</code>.', true);
+        return;
+      }
+
+      const response = await fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: message,
+          conversationHistory: conversationHistory,
+          timestamp: new Date().toISOString()
+        })
+      });
+
+      hideTyping();
+
+      if (response.ok) {
+        const data = await response.json();
+        const botResponse = data.response || data.message || data.output || 'Lo siento, no pude procesar tu solicitud.';
+        addMessage(botResponse, true);
+      } else {
+        addMessage('Lo siento, hubo un error al procesar tu mensaje. Por favor intenta de nuevo.', true);
+      }
+    } catch (error) {
+      hideTyping();
+      console.error('Error al enviar mensaje:', error);
+      addMessage('Lo siento, no pude conectar con el servidor. Por favor intenta de nuevo más tarde.', true);
+    }
+  }
+
+  // Event listeners
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const message = chatInput.value.trim();
+    if (message) {
+      sendMessage(message);
+    }
+  });
+
+  // Sugerencias rápidas
+  suggestionButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const message = btn.getAttribute('data-message');
+      sendMessage(message);
+    });
+  });
+
+  // Cerrar con Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      toggleChat();
+    }
+  });
+</script>

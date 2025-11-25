@@ -1,0 +1,270 @@
+---
+import menuData from '../data/menu.json';
+const { categorias } = menuData;
+---
+
+<section class="menu-section section" id="menu">
+  <div class="container">
+    <h2 class="section-title">Nuestra Carta</h2>
+    <p class="section-subtitle">Sabores auténticos con un toque contemporáneo</p>
+
+    <div class="menu-tabs">
+      {categorias.map((categoria, index) => (
+        <button
+          class={`menu-tab ${index === 0 ? 'active' : ''}`}
+          data-category={categoria.id}
+        >
+          {categoria.nombre}
+        </button>
+      ))}
+    </div>
+
+    <div class="menu-content">
+      {categorias.map((categoria, index) => (
+        <div
+          class={`menu-category ${index === 0 ? 'active' : ''}`}
+          data-category={categoria.id}
+        >
+          <div class="menu-grid">
+            {categoria.platillos.map((platillo) => (
+              <article class="menu-item">
+                <div class="menu-item-image">
+                  <img
+                    src={platillo.imagen}
+                    alt={platillo.nombre}
+                    loading="lazy"
+                  />
+                  {platillo.recomendado && (
+                    <span class="menu-item-badge">Chef recomienda</span>
+                  )}
+                </div>
+                <div class="menu-item-content">
+                  <div class="menu-item-header">
+                    <h3 class="menu-item-name">{platillo.nombre}</h3>
+                    <span class="menu-item-price">${platillo.precio}</span>
+                  </div>
+                  <p class="menu-item-description">{platillo.descripcion}</p>
+                  <div class="menu-item-tags">
+                    {platillo.vegetariano && (
+                      <span class="menu-tag vegetarian">Vegetariano</span>
+                    )}
+                    {platillo.picante && platillo.picante > 0 && (
+                      <span class="menu-tag spicy">
+                        {'🌶️'.repeat(platillo.picante)}
+                      </span>
+                    )}
+                    {platillo.alergenos && platillo.alergenos[0] !== 'ninguno' && (
+                      <span class="menu-tag allergens" title={`Alérgenos: ${platillo.alergenos.join(', ')}`}>
+                        ⚠️ Alérgenos
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .menu-section {
+    background-color: var(--color-white);
+  }
+
+  .menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+  }
+
+  .menu-tab {
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all var(--transition-normal);
+  }
+
+  .menu-tab:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+  }
+
+  .menu-tab.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .menu-category {
+    display: none;
+  }
+
+  .menu-category.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .menu-item {
+    background-color: var(--color-cream);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .menu-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .menu-item-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    background-color: var(--color-light);
+  }
+
+  .menu-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+  }
+
+  .menu-item:hover .menu-item-image img {
+    transform: scale(1.08);
+  }
+
+  .menu-item-badge {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background-color: var(--color-accent);
+    color: var(--color-white);
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .menu-item-content {
+    padding: var(--spacing-md);
+  }
+
+  .menu-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .menu-item-name {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-black);
+  }
+
+  .menu-item-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .menu-item-description {
+    font-size: 0.9rem;
+    color: var(--color-gray);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .menu-item-tags {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+
+  .menu-tag {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+  }
+
+  .menu-tag.vegetarian {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+
+  .menu-tag.spicy {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+
+  .menu-tag.allergens {
+    background-color: #fef2f2;
+    color: #991b1b;
+    cursor: help;
+  }
+
+  @media (max-width: 768px) {
+    .menu-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .menu-tab {
+      padding: var(--spacing-xs) var(--spacing-md);
+      font-size: 0.85rem;
+    }
+  }
+</style>
+
+<script>
+  // Tab switching functionality
+  const tabs = document.querySelectorAll('.menu-tab');
+  const categories = document.querySelectorAll('.menu-category');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const categoryId = tab.getAttribute('data-category');
+
+      // Update active tab
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Update active category
+      categories.forEach(cat => {
+        cat.classList.remove('active');
+        if (cat.getAttribute('data-category') === categoryId) {
+          cat.classList.add('active');
+        }
+      });
+    });
+  });
+</script>
